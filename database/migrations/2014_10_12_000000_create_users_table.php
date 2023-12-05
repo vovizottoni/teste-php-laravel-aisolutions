@@ -11,20 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-
-        Schema::create('documents', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
-            $table->bigInteger('category_id');
-            $table->string('title', 255);
-            $table->text('contents');
-
-            $table->foreign('category_id')
-                ->references('id')
-                ->on('categories')
-                ->onDelete('cascade');
         });
-
     }
 
     /**
@@ -32,9 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-
-        Schema::dropIfExists('documents');
-
-
+        Schema::dropIfExists('users');
     }
 };
